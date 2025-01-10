@@ -1,0 +1,16 @@
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('1112500100', 1, 'IPTU');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('1112500200', 2, 'JUROS MULTAS');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('1112530100', 3, 'ITBI');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('1112530200', 4, 'JUROS MULTAS');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('1114511100', 5, 'ISS');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('1114511200', 6, 'JUROS MULTAS');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('921112500100', 7, 'IPTU');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('921112500200', 8, 'JUROS MULTAS');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('921112530100', 9, 'ITBI');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('921112530200', 10, 'JUROS MULTAS');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('921114511100', 11, 'ISS');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('921114511200', 12, 'JUROS MULTAS');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('981112500100', 13, 'IPTU');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('981112500200', 14, 'JUROS MULTAS');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('981112530100', 15, 'ITBI');
+insert into `codigos` (`codigo`, `id`, `imposto`) values ('981114511100', 16, 'ISS');
