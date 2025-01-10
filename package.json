@@ -1,0 +1,22 @@
+{
+  "name": "fidaf",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/args": "^5.0.3",
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "compile": "bun build index.ts --compile --outfile receita --external mysql2 --external oracledb --external sqlite3 --external tedious --external pg-query-stream --external pg --external better-sqlite3"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "args": "^5.0.3",
+    "axios": "^1.7.9",
+    "date-fns": "^4.1.0",
+    "knex": "^3.1.0",
+    "mysql": "^2.18.1"
+  }
+}
