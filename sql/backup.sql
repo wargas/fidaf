@@ -1,5 +1,4 @@
-CREATE TABLE
-  `codigos` (
+CREATE TABLE `codigos` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `codigo` varchar(255) DEFAULT NULL,
     `imposto` varchar(255) DEFAULT NULL,
@@ -64,4 +63,5 @@ from
   )
 group by
   `rc`.`mes`,
-  `cd`.`imposto`
+  `cd`.`imposto`,
+  `cr`.`correcao`,

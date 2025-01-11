@@ -1,7 +1,8 @@
 process.env.TZ = "UTC";
-import args from 'args'
-import { carregarMes } from './src/carregar_mes'
+import args from 'args';
+import { carregarMes } from './src/carregar_mes';
 import { database } from './src/database';
+
 
 const defaults = {
     ano: new Date().getFullYear(),
@@ -20,8 +21,13 @@ console.log(`lendo dados`)
 const receitas = await carregarMes(ano, mes);
 
 console.log(`salvando no banco de dados`)
-await database.table('receitas').insert(receitas)
+
+if(receitas.length > 0) {
+    await database.table('receitas').insert(receitas)
     .onConflict('id').merge()
+
+    console.log(`Sem receitas`)
+}
 
 console.log('concluido')
 

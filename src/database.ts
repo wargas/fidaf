@@ -1,12 +1,14 @@
 import knex from "knex";
 
+
+
 export const database = knex({
-    client: 'mysql',
+    client: 'mysql2',
     connection: {
-        host: 'localhost',
-        port: 3306,
-        user: 'root',
-        password: '123456789',
-        database: 'fidaf'
+        host: process.env.MYSQL_HOST || 'localhost',
+        port: parseInt(process.env.MYSQL_PORT || '3308'),
+        user: process.env.MYSQL_USER || 'root',
+        password: process.env.MYSQL_PASSWORD || '123456789',
+        database: process.env.MYSQL_DATABASE || 'fidaf'
     }
 })

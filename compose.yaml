@@ -1,0 +1,14 @@
+services:
+  server:
+    build:
+      context: .
+    environment:
+      TZ: UTC
+      CRON: '0 * * * * *'
+      MYSQL_HOST: deltex.com.br
+      MYSQL_PORT: 3308
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: Wrgs2703!
+      MYSQL_DATABASE: fidaf
+    ports:
+      - 3333:3333
