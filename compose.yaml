@@ -4,6 +4,5 @@ services:
       context: .
     environment:
       TZ: UTC
-      CRON: '0 * * * * *'
     ports:
       - 3333:3333
