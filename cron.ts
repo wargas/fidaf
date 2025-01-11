@@ -5,51 +5,66 @@ import { database } from './src/database';
 
 console.log(`Starting...`)
 
-const job = new CronJob(process.env.CRON || '', async () => {
-    const mesCurrent = new Date();
+const cron = CronJob.from({
+    cronTime: process.env.CRON||'',
+    runOnInit: true,
+    onTick: async () => {
+        const mesCurrent = new Date();
 
-    const mesAnterior = subMonths(mesCurrent, 1)
-
-    for await (let current of [mesCurrent, mesAnterior]) {
-        const ano = format(current, 'yyyy')
-        const mes = format(current, 'MM')
-
-        console.log(`carregando... ${ano}/${mes}`)
-
-        const data = await carregarMes(parseInt(ano), parseInt(mes));
-
-        
-        if(data.length > 0) {
-            console.log(`atualizando... ${ano}/${mes}`)
-
-            await database.table('receitas').insert(data)
-            .onConflict('id').merge()
+        const mesAnterior = subMonths(mesCurrent, 1)
+    
+        for await (let current of [mesCurrent, mesAnterior]) {
+            const ano = format(current, 'yyyy')
+            const mes = format(current, 'MM')
+    
+            console.info(`carregando... ${ano}/${mes}`)
+    
+            const data = await carregarMes(parseInt(ano), parseInt(mes));
+    
+    
+            if (data.length > 0) {
+                console.info(`atualizando... ${ano}/${mes}`)
+    
+                await database.table('receitas').insert(data)
+                    .onConflict('id').merge()
+            }
+    
+            console.info(`concluído: ${ano}/${mes}`)
+    
         }
-
-        
-
-    }
+    
+        console.info(`Proxima: ${cron.nextDate().toFormat('dd/MM/yyyy hh:mm:ss')}`)
+    },
+    start: true
 })
 
-job.start()
+// const job = new CronJob(process.env.CRON || '', async () => {
+//     const mesCurrent = new Date();
+
+//     const mesAnterior = subMonths(mesCurrent, 1)
+
+//     for await (let current of [mesCurrent, mesAnterior]) {
+//         const ano = format(current, 'yyyy')
+//         const mes = format(current, 'MM')
+
+//         console.info(`carregando... ${ano}/${mes}`)
+
+//         const data = await carregarMes(parseInt(ano), parseInt(mes));
 
 
-// process.exit(0)
-// const mesCurrent = new Date();
+//         if (data.length > 0) {
+//             console.info(`atualizando... ${ano}/${mes}`)
 
-// const mesAnterior = subMonths(mesCurrent, 1)
+//             await database.table('receitas').insert(data)
+//                 .onConflict('id').merge()
+//         }
 
-// for await (let current of [mesCurrent, mesAnterior]) {
-//     const ano = format(current, 'yyyy')
-//     const mes = format(current, 'MM')
+//         console.info(`concluído: ${ano}/${mes}`)
 
-//     console.log(`carregando... ${ano}/${mes}`)
+//     }
 
-//     const data = await carregarMes(parseInt(ano), parseInt(mes));
+//     console.info(`Proxima: ${job.nextDate().toFormat('dd/MM/yyyy hh:mm:ss')}`)
+// })
 
-//     console.log(`atualizando... ${ano}/${mes}`)
 
-//     await database.table('receitas').insert(data)
-//         .onConflict('id').merge()
-
-// }
+// job.start()
