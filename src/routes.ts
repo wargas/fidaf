@@ -8,6 +8,7 @@ app.get('/cron', (_, res) => {
 
 app.get('/resumo', async(_, res) => {
     const data = await database.table('resumo')
+        .orderBy('mes', 'desc')
 
     return data;
 })
