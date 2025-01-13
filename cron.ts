@@ -9,7 +9,8 @@ console.log(`Starting...`)
 
 export const cron = CronJob.from({
     cronTime: process.env.CRON || '',
-    runOnInit: false,
+    runOnInit: true,
+    timeZone: 'America/Recife',
     onTick: async () => {
         const mesCurrent = new Date();
 
