@@ -10,5 +10,7 @@ COPY . .
 
 RUN bun install
 
-CMD [ "bun", "cron.ts" ]
+EXPOSE 3333
+
+CMD [ "bun", "server.ts" ]
 
