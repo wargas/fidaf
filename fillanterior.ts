@@ -1,11 +1,21 @@
-import { addDays, format, isBefore, } from "date-fns"
-import { database } from "./src/database"
+// import { addDays, format, isBefore, } from "date-fns"
+import { addDays, format, isBefore } from "date-fns"
 import { carregarDia } from "./src/carregar_dia"
+import { database } from "./src/database"
 
-const codigos = (await database.table('codigos').select('codigo'))
+// const data = await carregarDia('2024-12-31', '9811145110')
+
+
+const subalineas = (await database.table('codigos')
+    .groupBy('subalinea')
+    .select('subalinea'))
+    .map(c => c.subalinea)
+
+const codigos = (await database.table('codigos'))
     .map(c => c.codigo)
 
-let currentDay = new Date("2024-01-02")
+
+let currentDay = new Date("2024-01-01")
 const lastDay = new Date()
 
 while(isBefore(currentDay, lastDay)) {
@@ -13,12 +23,12 @@ while(isBefore(currentDay, lastDay)) {
 
     const formated = format(currentDay, 'y-MM-dd')
     
-    for await (let codigo of codigos) {
-        const data = await carregarDia(formated, codigo);
+    for await (let subalinea of subalineas) {
+        const data = await carregarDia(formated, subalinea);
 
-        if(data != null) {
+        if(data.length > 0) {
             await database.table('recolhimento')
-                .insert(data)
+                .insert(data.filter(d => codigos.includes(d.codigo)))
                 .onConflict()
                 .merge()
         }
