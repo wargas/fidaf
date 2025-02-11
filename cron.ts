@@ -5,8 +5,6 @@ import { database } from './src/database';
 
 console.log(`Starting...`)
 
-
-
 export const cron = CronJob.from({
     cronTime: process.env.CRON || '',
     runOnInit: true,
