@@ -52,7 +52,10 @@ app.get('/recolhimentos', async(req, res) => {
     const data = await query;
         // .orderBy('data', 'desc')
 
-    return data;
+    return data.map(d => ({...d, 
+        nominal: parseFloat(d.nominal),
+        corrigido: parseFloat(d.corrigido),
+    }));
 })
 
 app.get('/ipca', async(_, res) => {
