@@ -32,7 +32,7 @@ app.get('/recolhimentos', async(req, res) => {
 
     const { inicio = '', fim = '', orderBy = 'data'} = req.query as any;
 
-    const query = database.table('recolhimento')
+    const query = database.table('recolhimento_diario')
 
     if(String(orderBy).startsWith('-')) {
         query.orderBy(String(orderBy).replace('-', ''), 'DESC')
@@ -47,6 +47,7 @@ app.get('/recolhimentos', async(req, res) => {
     if(fim) {
         query.where('data', '<=', fim)
     }
+
 
     const data = await query;
         // .orderBy('data', 'desc')
