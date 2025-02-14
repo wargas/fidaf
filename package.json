@@ -12,6 +12,7 @@
   "scripts": {
     "compile": "bun build index.ts --compile --outfile receita --external mysql --external oracledb --external sqlite3 --external tedious --external pg-query-stream --external pg --external better-sqlite3",
     "compile:cron": "bun build cron.ts --compile --outfile cron-job --external mysql --external oracledb --external sqlite3 --external tedious --external pg-query-stream --external pg --external better-sqlite3",
+    "compile:validar": "bun build src/validar.ts --outfile dist/validar.js --target node --external mysql --external oracledb --external sqlite3 --external tedious --external pg-query-stream --external pg --external better-sqlite3",
     "build:fill": "bun build fillanterior.ts --outfile dist/fill.js --target node --external mysql --external oracledb --external sqlite3 --external tedious --external pg-query-stream --external pg --external better-sqlite3"
   },
   "peerDependencies": {
