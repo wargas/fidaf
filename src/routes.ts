@@ -66,9 +66,11 @@ app.get('/calculo', async (req, res) => {
     const { inicio = '2025-01-01', fim = format(defaultEnd, 'Y-MM-dd') } = req.query as any;
 
     const inicioPrev = String(inicio).replace('2025', '2024')
-    const fimPrev = String(fim).replace('2025', '2024')
+    let fimPrev = String(fim).replace('2025', '2024')
 
-    
+    if(fimPrev == '2024-02-28' && inicioPrev <= '2024-02-15') {
+        fimPrev = '2024-02-29'
+    }
     
     const queryPrev = (await database.table('recolhimento_diario')
         .whereBetween('data', [inicioPrev, fimPrev])).map(r => ({...r,
