@@ -50,8 +50,8 @@ workerLoadDays.on('error', () => {
     console.log('ocorreu um erro')
 })
 
-workerLoadDays.on('progress', (job, progress) => {
-    console.log(job.name, progress)
+workerLoadDays.on('progress', (job, progress:any) => {
+    console.log(job.name, progress?.state)
 })
 
 export { workerLoadDays };
