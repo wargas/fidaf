@@ -1,9 +1,11 @@
-import { addDays, format, isBefore, subDays } from "date-fns"
-import { carregarDia } from "./carregar_dia"
-import { database } from "./database"
+import { Worker } from "bullmq";
+import { addDays, format, isBefore, subDays } from "date-fns";
+import { carregarDia } from "./carregar_dia";
+import { database } from "./database";
+import { connection } from "./redis";
 
-export async function Worker(days: number) {
-    console.time('w')
+export const workerLoadDays = new Worker<number, any, string>('loadDays', async Job => {
+    console.log('Iniciando...')
     const subalineas = (await database.table('codigos')
         .groupBy('subalinea')
         .select('subalinea'))
@@ -14,7 +16,7 @@ export async function Worker(days: number) {
 
 
     const lastDay = new Date()
-    let currentDay = subDays(new Date(), days)
+    let currentDay = subDays(new Date(), Job.data)
 
     while (isBefore(currentDay, lastDay)) {
         currentDay = addDays(currentDay, 1)
@@ -35,6 +37,5 @@ export async function Worker(days: number) {
         console.log(formated)
     }
 
-    console.timeEnd('w')
-
-}
+    return true;
+}, { connection, autorun: false })

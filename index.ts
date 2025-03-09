@@ -18,9 +18,9 @@ const flags = args
 const {mes, ano} = Object.assign(defaults, flags)
     
 console.log(`lendo dados`)
-const receitas = await carregarMes(ano, mes);
+const receitas = await carregarMes(ano, mes); 
 
-console.log(`salvando no banco de dados`)
+console.log(`salvando no banco de dados`) 
 
 if(receitas.length > 0) {
     await database.table('receitas').insert(receitas)

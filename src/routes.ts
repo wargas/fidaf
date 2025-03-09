@@ -1,12 +1,11 @@
 import { format } from "date-fns";
 import { sumBy } from "lodash";
-import { cron } from "../cron";
 import app from "./app";
 import { database } from "./database";
+import { queueLoadDays } from "./queues";
 
-app.get('/cron', (_, res) => {
-
-    res.send({ nextDate: cron.nextDate() })
+app.get('/process', (_, res) => {
+    return queueLoadDays.add('loadDays', 10)
 })
 
 app.get('/resumo', async (_, res) => {
