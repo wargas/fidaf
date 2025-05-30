@@ -144,3 +144,12 @@ app.get('/ipca', async (_, res) => {
     return data;
 });
 
+app.post('/ipca', async (req, res) => {
+    const data = req.body as { mes: string, indice: number }
+
+    const update = await database.table('ipca')
+        .where('mes', '>=', data.mes)
+        .update('indice', data.indice)
+
+    return update;
+});
