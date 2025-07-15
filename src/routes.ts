@@ -22,6 +22,12 @@ app.get('/correcao', async (_, res) => {
     return data;
 })
 
+app.get('/status', async (_, res) => {
+    const data = await database.table('status');
+
+    return data;
+})
+
 app.get('/receitas', async (_, res) => {
     const data = await database.table('receitas')
         .orderBy('mes', 'desc')
