@@ -107,7 +107,7 @@ app.get('/calculo', async (req, res) => {
             valor: 0
         }, 
         distribuicao: {
-            pontos: 492.7,
+            pontos: 507.77,
             auditor: 0,
             analista: 0
         }
