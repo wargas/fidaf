@@ -8,6 +8,7 @@ import { TaskServidores } from './src/tasks/task-servidores';
 const job = CronJob.from({
     cronTime: process.env.CRON||"",
     start: true,
+    timeZone: 'America/Fortaleza',
     onTick: async () => {
         console.log("Iniciando tasks")
         await TaskServidores();
