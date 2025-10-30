@@ -3,7 +3,7 @@ import { carregarDia } from "../carregar_dia"
 import { database } from "../database"
 
 export async function TaskRecolhimentos() {
-    console.log('btendo subalineas')
+    console.log('obtendo subalineas')
     const subalineas = (await database.table('codigos')
         .groupBy('subalinea')
         .select('subalinea'))

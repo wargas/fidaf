@@ -27,7 +27,7 @@ app.server.on('listening', async (...args: any[]) => {
     console.log(`Server listening on PORT ${args[2]}`)
 
 
-    // job.start()
+    job.start()
 
     console.log("Próxima execução:", job.nextDate());
 

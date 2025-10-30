@@ -43,3 +43,6 @@ await carregarServidores(3, database);
 await carregarServidores(4, database);
 await carregarServidores(5, database);
 await carregarServidores(6, database);
+await carregarServidores(7, database);
+await carregarServidores(8, database);
+await carregarServidores(9, database);
