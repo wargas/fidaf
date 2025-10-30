@@ -1,17 +1,35 @@
 import { Worker } from "bullmq";
 import { addDays, format, isBefore, subDays } from "date-fns";
 import { carregarDia } from "./carregar_dia";
+import { carregarServidores } from "./carregar_servidores";
 import { database } from "./database";
 import { connection } from "./redis";
 
+
+const workerServidores = new Worker('loadServidores', async job => {
+    await database.transaction(async function (trx) {
+        trx.table('servidores').truncate();
+
+        const mes = new Date().getMonth();
+
+        for (let i = 1; i <= mes; i++) {
+            await carregarServidores(i, trx)
+        }
+
+        trx.commit()
+    })
+
+    return true;
+}, { connection, autorun: true })
+
 const workerLoadDays = new Worker<number, any, string>('loadDays', async job => {
-    job.updateProgress({state: 'obtendo subalineas'})
+    job.updateProgress({ state: 'obtendo subalineas' })
     const subalineas = (await database.table('codigos')
         .groupBy('subalinea')
         .select('subalinea'))
         .map(c => c.subalinea)
 
-    job.updateProgress({state: 'obtendo codigos'})
+    job.updateProgress({ state: 'obtendo codigos' })
     const codigos = (await database.table('codigos'))
         .map(c => c.codigo)
 
@@ -19,7 +37,7 @@ const workerLoadDays = new Worker<number, any, string>('loadDays', async job => 
     const lastDay = new Date()
     let currentDay = subDays(new Date(), job.data)
 
-    job.updateProgress({state: 'iniciando o processo'})
+    job.updateProgress({ state: 'iniciando o processo' })
     while (isBefore(currentDay, lastDay)) {
         currentDay = addDays(currentDay, 1)
 
@@ -27,7 +45,7 @@ const workerLoadDays = new Worker<number, any, string>('loadDays', async job => 
 
         for await (let subalinea of subalineas) {
 
-            job.updateProgress({state: `${formated}:${subalinea}`})
+            job.updateProgress({ state: `${formated}:${subalinea}` })
             const data = await carregarDia(formated, subalinea);
 
             if (data.length > 0) {
@@ -37,11 +55,11 @@ const workerLoadDays = new Worker<number, any, string>('loadDays', async job => 
                     .merge()
             }
 
-            
+
         }
     }
 
-    job.updateProgress({state: 'concluido'})
+    job.updateProgress({ state: 'concluido' })
 
     return true;
 }, { connection, autorun: false })
@@ -50,8 +68,21 @@ workerLoadDays.on('error', () => {
     console.log('ocorreu um erro')
 })
 
-workerLoadDays.on('progress', (job, progress:any) => {
+
+
+workerLoadDays.on('progress', (job, progress: any) => {
     console.log(job.name, progress?.state)
 })
 
-export { workerLoadDays };
+workerServidores.on('error', () => {
+    console.log('ocorreu um erro')
+})
+
+
+
+workerServidores.on('progress', (job, progress: any) => {
+    console.log(job.name, progress?.state)
+})
+
+export { workerLoadDays, workerServidores };
+

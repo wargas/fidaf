@@ -2,11 +2,7 @@ import { format } from "date-fns";
 import { sumBy } from "lodash";
 import app from "./app";
 import { database } from "./database";
-import { queueLoadDays } from "./queues";
 
-app.get('/process', (_, res) => {
-    return queueLoadDays.add('loadDays', 10)
-})
 
 app.get('/resumo', async (_, res) => {
     const data = await database.table('resumo')
