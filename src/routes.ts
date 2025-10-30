@@ -18,6 +18,12 @@ app.get('/correcao', async (_, res) => {
     return data;
 })
 
+app.get('/status', async (_, res) => {
+    const data = await database.table('status');
+
+    return data;
+})
+
 app.get('/receitas', async (_, res) => {
     const data = await database.table('receitas')
         .orderBy('mes', 'desc')
@@ -97,7 +103,7 @@ app.get('/calculo', async (req, res) => {
             valor: 0
         }, 
         distribuicao: {
-            pontos: 513.9,
+            pontos: 507.77,
             auditor: 0,
             analista: 0
         }
