@@ -26,7 +26,7 @@ export const wokerLoadDays = new Worker(queueName, async job => {
     const lastDay = new Date()
     let currentDay = subDays(new Date(), job.data)
 
-    job.updateProgress({ state: 'iniciando o processo' })
+    job.log('iniciando o processo')
     while (isBefore(currentDay, lastDay)) {
         currentDay = addDays(currentDay, 1)
 
@@ -36,16 +36,14 @@ export const wokerLoadDays = new Worker(queueName, async job => {
         for await (let subalinea of subalineas) {
             job.log(`${formated}:${subalinea}`)
 
-            job.updateProgress({ state: `${formated}:${subalinea}` })
-
             await queueLoadDay.add('default', { day: formated, subalinea, codigos }, {
-                jobId: `${formated}:${subalinea}`,
+                // jobId: `${formated}:${subalinea}`,
                 removeOnComplete: true
             })
         }
     }
 
-    job.updateProgress({ state: 'concluido' })
+    job.log('concluido')
 
     return true;
 }, { connection, autorun: false })
