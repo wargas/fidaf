@@ -16,7 +16,10 @@ app.server.on('listening', async (...args: any[]) => {
 
 
     await queueLoadDays.upsertJobScheduler('cron', {
-        pattern: process.env.CRON!
+        pattern: process.env.CRON!,
+        
+    }, {
+        data: 10
     })
 
     wokerLoadDays.run();
