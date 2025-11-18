@@ -1,21 +1,8 @@
 // import './cron';
-import { CronJob } from 'cron';
 import app from './src/app';
 import "./src/routes";
-import { TaskRecolhimentos } from './src/tasks/task-recolhimentos';
-
-const job = CronJob.from({
-    cronTime: process.env.CRON||"",
-    start: false,
-    timeZone: 'America/Fortaleza',
-    onTick: async () => {
-        console.log("Iniciando tasks")
-        // await TaskServidores();
-        await TaskRecolhimentos();
-        console.log("Finalizando tasks")
-    },
-    
-})
+import { wokerLoadDay } from './src/workers/workerLoadDay';
+import { queueLoadDays, wokerLoadDays } from './src/workers/workerLoadDays';
 
 
 app.listen({
@@ -28,8 +15,11 @@ app.server.on('listening', async (...args: any[]) => {
     console.log(`Server listening on PORT ${args[2]}`)
 
 
-    job.start()
+    await queueLoadDays.upsertJobScheduler('cron', {
+        pattern: process.env.CRON!
+    })
 
-    console.log("Próxima execução:", job.nextDate());
+    wokerLoadDays.run();
+    wokerLoadDay.run();
 
 })
