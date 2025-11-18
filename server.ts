@@ -3,18 +3,18 @@ import { CronJob } from 'cron';
 import app from './src/app';
 import "./src/routes";
 import { TaskRecolhimentos } from './src/tasks/task-recolhimentos';
-import { TaskServidores } from './src/tasks/task-servidores';
 
 const job = CronJob.from({
     cronTime: process.env.CRON||"",
-    start: true,
+    start: false,
     timeZone: 'America/Fortaleza',
     onTick: async () => {
         console.log("Iniciando tasks")
-        await TaskServidores();
+        // await TaskServidores();
         await TaskRecolhimentos();
         console.log("Finalizando tasks")
-    }
+    },
+    
 })
 
 
