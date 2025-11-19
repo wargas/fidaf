@@ -15,6 +15,10 @@ export const queueLoadDay = new Queue<QueueInput>(queueName, {
 
 export const wokerLoadDay = new Worker<QueueInput>(queueName, async job => {
 
+    setTimeout(() => {
+        throw new Error("TIMEOUT")
+    }, 5000)
+
     job.log('carregando dia')
     const data = await carregarDia(job.data.day, job.data.subalinea);
 
