@@ -14,14 +14,14 @@ export const queueLoadDay = new Queue<QueueInput>(queueName, {
 })
 
 export const wokerLoadDay = new Worker<QueueInput>(queueName, async job => {
-    const codigos = (await database.table('codigos'))
-        .map(c => c.codigo)
 
+    job.log('carregando dia')
     const data = await carregarDia(job.data.day, job.data.subalinea);
 
+    job.log('atualizando data')
     if (data.length > 0) {
         await database.table('recolhimento')
-            .insert(data.filter(d => codigos.includes(d.codigo)))
+            .insert(data.filter(d => job.data.codigos.includes(d.codigo!)))
             .onConflict()
             .merge()
     }
