@@ -1,8 +1,7 @@
 // import './cron';
 import app from './src/app';
 import "./src/routes";
-import { wokerLoadDay } from './src/workers/workerLoadDay';
-import { queueLoadDays, wokerLoadDays } from './src/workers/workerLoadDays';
+import { queueLoadDays } from './src/workers/workerLoadDays';
 
 
 app.listen({
@@ -22,7 +21,6 @@ app.server.on('listening', async (...args: any[]) => {
         data: 10
     })
 
-    wokerLoadDays.run();
-    wokerLoadDay.run();
+    
 
 })

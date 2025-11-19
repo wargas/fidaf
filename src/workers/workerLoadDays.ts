@@ -37,7 +37,7 @@ export const wokerLoadDays = new Worker(queueName, async job => {
             job.log(`${formated}:${subalinea}`)
 
             await queueLoadDay.add('default', { day: formated, subalinea, codigos }, {
-                // jobId: `${formated}:${subalinea}`,
+                jobId: `${formated}:${subalinea}`,
                 removeOnComplete: 10
             })
         }

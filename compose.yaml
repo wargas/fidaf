@@ -6,3 +6,12 @@ services:
       TZ: UTC
     ports:
       - 3333:3333
+  workers:
+    build:
+      context: .
+    environment:
+      TZ: UTC
+    command: ["bun", "background.ts"]
+    deploy:
+      mode: replicated
+      replicas: 5
