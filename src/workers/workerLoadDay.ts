@@ -27,4 +27,6 @@ export const wokerLoadDay = new Worker<QueueInput>(queueName, async job => {
     }
 
     console.log(job.data.day, job.data.subalinea)
+
+    return true;
 }, {connection, autorun: false})
