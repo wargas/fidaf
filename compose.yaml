@@ -6,6 +6,7 @@ services:
       TZ: UTC
     ports:
       - 3333:3333
+    command: ["bun", "server.ts"]
   workers:
     build:
       context: .

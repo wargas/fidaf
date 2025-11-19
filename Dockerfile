@@ -12,5 +12,5 @@ RUN bun install
 
 EXPOSE 3333
 
-CMD [ "bun", "server.ts" ]
+CMD [ "tail", "-f", "/dev/null" ]
 
