@@ -6,7 +6,11 @@ import { JSDOM } from 'jsdom';
 export async function carregarDia(dia: string, subalinea: string) {
     const url = `https://transparencia.fortaleza.ce.gov.br/index.php/receita/consultarPorSubAlinea/${dia}/${dia}/${subalinea}/0`
 
-    const { data } = await axios.get(url);
+    const start = performance.now()
+    const { data, status } = await axios.get(url, { timeout: 10000});
+    const end = performance.now();
+
+    console.log(status, end-start)
 
     const { window: { document } } = new JSDOM(data)
 

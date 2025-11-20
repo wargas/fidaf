@@ -15,22 +15,21 @@ export const queueLoadDay = new Queue<QueueInput>(queueName, {
 
 export const wokerLoadDay = new Worker<QueueInput>(queueName, async job => {
 
-    setTimeout(() => {
-        throw new Error("TIMEOUT")
-    }, 5000)
-
+    
     job.log('carregando dia')
     const data = await carregarDia(job.data.day, job.data.subalinea);
 
     job.log('atualizando data')
+    console.log(job.data.day, job.data.subalinea)
     if (data.length > 0) {
         await database.table('recolhimento')
             .insert(data.filter(d => job.data.codigos.includes(d.codigo!)))
             .onConflict()
             .merge()
+
+        return data;
     }
 
-    console.log(job.data.day, job.data.subalinea)
 
-    return true;
+    return [];
 }, {connection, autorun: false})
