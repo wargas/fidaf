@@ -98,6 +98,7 @@ app.get('/calculo', async (req, res) => {
             valor: 0,
             porcentagem: 0
         },
+        refis: 0,
         premio: {
             porcentagem: 0,
             valor: 0
@@ -129,7 +130,8 @@ app.get('/calculo', async (req, res) => {
         receitas.premio.porcentagem = 0.125
     }
 
-    receitas.premio.valor = receitas.premio.porcentagem * receitas.incremento.valor * 0.8
+    receitas.refis = 31_000_000
+    receitas.premio.valor = (receitas.premio.porcentagem * receitas.incremento.valor * 0.8) + (receitas.refis * 0.05)
 
     receitas.distribuicao.auditor = receitas.premio.valor / receitas.distribuicao.pontos * 3
     receitas.distribuicao.analista = receitas.premio.valor / receitas.distribuicao.pontos * 2.1
