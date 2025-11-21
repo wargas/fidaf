@@ -49,4 +49,4 @@ export const wokerLoadDays = new Worker(queueName, async job => {
     job.log('concluido')
 
     return true;
-}, { connection, autorun: false })
+}, { connection, autorun: true })

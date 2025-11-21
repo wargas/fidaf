@@ -12,4 +12,4 @@ process.on('SIGINT', shutdown)
 process.on('SIGTERM', shutdown)
 
 
-await Promise.all(workers.map(w => w.run()))
+// await Promise.all(workers.map(w => w.run()))
