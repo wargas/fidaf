@@ -15,6 +15,11 @@ export const queueLoadDay = new Queue<QueueInput>(queueName, {
 
 export const wokerLoadDay = new Worker<QueueInput>(queueName, async job => {
 
+    setInterval(() => {
+        job.log(`Rodando o job ${job.id}`)
+        console.log(`Rodando o job ${job.id}`)
+    }, 5000)
+
 
     try {
         job.log('carregando dia')
