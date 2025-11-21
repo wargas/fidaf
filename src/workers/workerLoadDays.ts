@@ -40,7 +40,8 @@ export const wokerLoadDays = new Worker(queueName, async job => {
                 jobId: `${formated}:${subalinea}`,
                 removeOnComplete: 10,
                 attempts: 10,
-                removeOnFail: false
+                removeOnFail: false,
+                
             })
         }
     }

@@ -9,7 +9,7 @@ export type QueueInput = {
     day: string, subalinea: string, codigos: string[]
 }
 
-export const queueLoadDay = new Queue<QueueInput>(queueName, {
+export const queueLoadDay = new Queue<QueueInput>(queueName, {    
     connection: connection
 })
 
