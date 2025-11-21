@@ -36,4 +36,4 @@ export const wokerLoadDay = new Worker<QueueInput>(queueName, async job => {
     }
 
     return [];
-}, { connection, autorun: false })
+}, { connection, concurrency: 5, autorun: true })
