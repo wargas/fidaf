@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { sumBy } from "lodash";
 import app from "./app";
 import { database } from "./database";
+import { connection } from "./redis";
 
 
 app.get('/resumo', async (_, res) => {
@@ -130,7 +131,9 @@ app.get('/calculo', async (req, res) => {
         receitas.premio.porcentagem = 0.125
     }
 
-    receitas.refis = 31_000_000
+    const valorRefis = await connection.get('valor_refis')
+
+    receitas.refis =  parseFloat(valorRefis||'0')
     receitas.premio.valor = (receitas.premio.porcentagem * receitas.incremento.valor * 0.8) + (receitas.refis * 0.05)
 
     receitas.distribuicao.auditor = receitas.premio.valor / receitas.distribuicao.pontos * 3
