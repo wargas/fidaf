@@ -2,7 +2,7 @@
 
 FROM oven/bun as build
 
-ENV TZ UTC
+ENV TZ=UTC
 
 WORKDIR /usr/src/app
 
@@ -12,5 +12,5 @@ RUN bun install
 
 EXPOSE 3333
 
-CMD [ "tail", "-f", "/dev/null" ]
+# CMD [ "tail", "-f", "/dev/null" ]
 

@@ -10,6 +10,7 @@
     "@types/lodash": "^4.17.15"
   },
   "scripts": {
+    "build:docker": "docker build . -t wargas/fidaf-api",
     "compile": "bun build index.ts --compile --outfile receita --external mysql --external oracledb --external sqlite3 --external tedious --external pg-query-stream --external pg --external better-sqlite3",
     "compile:cron": "bun build cron.ts --compile --outfile cron-job --external mysql --external oracledb --external sqlite3 --external tedious --external pg-query-stream --external pg --external better-sqlite3",
     "compile:validar": "bun build src/validar.ts --outfile dist/validar.js --target node --external mysql --external oracledb --external sqlite3 --external tedious --external pg-query-stream --external pg --external better-sqlite3",
