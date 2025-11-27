@@ -12,5 +12,5 @@ RUN bun install
 
 EXPOSE 3333
 
-# CMD [ "tail", "-f", "/dev/null" ]
+CMD [ "tail", "-f", "/dev/null" ]
 
