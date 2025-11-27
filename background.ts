@@ -63,11 +63,9 @@ const loadDay = async (subalinea:string, day:string, codigos: string[]) => {
 
 
 while (true) {
-    await loadDays(10);
-    console.log('aguardar 5 min')
+    await loadDays(5);
 
-    process.exit(0)
-    await Bun.sleep(300 * 1000)
+    process.exit(1)
     
 }
 // await Promise.all(workers.map(w => w.run()))
