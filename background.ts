@@ -61,7 +61,8 @@ const loadDay = async (subalinea:string, day:string, codigos: string[]) => {
     return [];
 }
 
-await loadDays(5);
+await loadDays(6);
 
 process.exit(0)
+
 // await Promise.all(workers.map(w => w.run()))
