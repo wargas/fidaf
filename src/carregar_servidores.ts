@@ -35,7 +35,11 @@ export async function carregarServidores(_mes: number, database: Knex) {
     if (items.length > 0) {
         await database.table('servidores').insert(items);
     }
+
+    console.log(`${mes} atualizado`)
 }
+
+await await knex.raw('TRUNCATE TABLE servidores');
 
 await carregarServidores(1, database);
 await carregarServidores(2, database);
@@ -49,3 +53,5 @@ await carregarServidores(9, database);
 await carregarServidores(10, database);
 await carregarServidores(11, database);
 await carregarServidores(12, database);
+
+process.exit(0);
