@@ -39,7 +39,7 @@ export async function carregarServidores(_mes: number, database: Knex) {
     console.log(`${mes} atualizado`)
 }
 
-await await knex.raw('TRUNCATE TABLE servidores');
+await await database.raw('TRUNCATE TABLE servidores');
 
 await carregarServidores(1, database);
 await carregarServidores(2, database);
