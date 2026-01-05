@@ -46,3 +46,6 @@ await carregarServidores(6, database);
 await carregarServidores(7, database);
 await carregarServidores(8, database);
 await carregarServidores(9, database);
+await carregarServidores(10, database);
+await carregarServidores(11, database);
+await carregarServidores(12, database);
