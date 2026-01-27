@@ -121,7 +121,7 @@ app.get('/calculo', async (req, res) => {
     receitas.incremento.valor = receitas.incremento.valor < 0 ? 0 : receitas.incremento.valor
     receitas.incremento.porcentagem = receitas.incremento.valor / receitas.prev.corrigida
 
-    receitas.premio.porcentagem = 0.1
+    receitas.premio.porcentagem = 0.125
 
     if(receitas.incremento.porcentagem >= 0.1) {
         receitas.premio.porcentagem = 0.15
