@@ -55,6 +55,7 @@ const loadDay = async (subalinea:string, day:string, codigos: string[]) => {
         }
 
     } catch (error) {
+        console.log(error);
         throw new Error("Erro ao obter dados")
     }
 
@@ -66,3 +67,4 @@ await loadDays(6);
 process.exit(0)
 
 // await Promise.all(workers.map(w => w.run()))
+
