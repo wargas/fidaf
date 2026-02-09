@@ -45,9 +45,11 @@ const loadDay = async (subalinea:string, day:string, codigos: string[]) => {
 
         console.log('atualizando data')
         console.log(day, subalinea)
-        if (data.length > 0) {
+
+        const items = data.filter(d => codigos.includes(d.codigo!));
+        if (items.length > 0) {
             await database.table('recolhimento')
-                .insert(data.filter(d => codigos.includes(d.codigo!)))
+                .insert(items)
                 .onConflict()
                 .merge()
 
@@ -67,4 +69,5 @@ await loadDays(6);
 process.exit(0)
 
 // await Promise.all(workers.map(w => w.run()))
+
 
