@@ -65,13 +65,13 @@ app.get('/recolhimentos', async (req, res) => {
 
 app.get('/calculo', async (req, res) => {
     const defaultEnd = new Date()
-    const { inicio = '2025-01-01', fim = format(defaultEnd, 'Y-MM-dd') } = req.query as any;
+    const { inicio = '2026-01-01', fim = format(defaultEnd, 'Y-MM-dd') } = req.query as any;
 
-    const inicioPrev = String(inicio).replace('2025', '2024')
-    let fimPrev = String(fim).replace('2025', '2024')
+    const inicioPrev = String(inicio).replace('2026', '2025')
+    let fimPrev = String(fim).replace('2026', '2025')
 
-    if(fimPrev == '2024-02-28' && inicioPrev <= '2024-02-15') {
-        fimPrev = '2024-02-29'
+    if(fimPrev == '2025-02-28' && inicioPrev <= '2025-02-15') {
+        fimPrev = '2025-02-29'
     }
     
     const queryPrev = (await database.table('recolhimento_diario')
@@ -160,3 +160,4 @@ app.post('/ipca', async (req, res) => {
 
     return update;
 });
+
