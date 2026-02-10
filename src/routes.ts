@@ -123,15 +123,15 @@ app.get('/calculo', async (req, res) => {
 
     receitas.premio.porcentagem = 0.1
 
-    if(receitas.incremento.porcentagem >= 0.1) {
+    if(receitas.incremento.porcentagem >= 0.07) {
         receitas.premio.porcentagem = 0.15
     }
 
-    if(receitas.incremento.porcentagem >= 0.06 && receitas.incremento.porcentagem < 0.1) {
+    if(receitas.incremento.porcentagem >= 0.04 && receitas.incremento.porcentagem < 0.07) {
         receitas.premio.porcentagem = 0.125
     }
 
-    const valorRefis = await connection.get('valor_refis')
+    const valorRefis = 0;//await connection.get('valor_refis')
 
     receitas.refis =  parseFloat(valorRefis||'0')
     receitas.premio.valor = (receitas.premio.porcentagem * receitas.incremento.valor * 0.8) + (receitas.refis * 0.05)
