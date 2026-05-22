@@ -15,7 +15,7 @@ const cargos = [
 export async function carregarServidores(_mes: number, database: Knex) {
     const mes = String(_mes).padStart(2, "0");
 
-    const url = `https://transparencia.fortaleza.ce.gov.br/index.php/servidores/consultar?mes=${mes}&ano=2025&orgao=23101`
+    const url = `https://transparencia.fortaleza.ce.gov.br/index.php/servidores/consultar?mes=${mes}&ano=2026&orgao=23101`
 
     const { data } = await axios.get(url)
 
