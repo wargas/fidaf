@@ -4,6 +4,8 @@ import { database } from "./src/database"
 
 const loadDays = async (dias:number) => {
     console.log('iniciou')
+
+    console.time('s')
     // job.updateProgress({ state: 'obtendo subalineas' })
     const subalineas = (await database.table('codigos')
         .groupBy('subalinea')
@@ -33,6 +35,7 @@ const loadDays = async (dias:number) => {
     }
 
     console.log('concluido')
+    console.timeEnd('s')
 
     return true;
 }
@@ -58,7 +61,7 @@ const loadDay = async (subalinea:string, day:string, codigos: string[]) => {
 
     } catch (error) {
         console.log(error);
-        throw new Error("Erro ao obter dados")
+        // throw new Error("Erro ao obter dados")
     }
 
     return [];

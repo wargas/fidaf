@@ -10,7 +10,7 @@ export async function carregarDia(dia: string, subalinea: string) {
     const { data, status } = await axios.get(url, { timeout: 10000});
     const end = performance.now();
 
-    console.log(status, end-start)
+    // console.log(status, end-start)
 
     const { window: { document } } = new JSDOM(data)
 

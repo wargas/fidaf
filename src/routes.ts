@@ -3,7 +3,9 @@ import { sumBy } from "lodash";
 import app from "./app";
 import { database } from "./database";
 import { connection } from "./redis";
-
+import axios from "axios";
+import fs, { writeFile } from 'fs/promises'
+import { carregarDia } from "./carregar_dia";
 
 app.get('/resumo', async (_, res) => {
     const data = await database.table('resumo')
@@ -70,18 +72,20 @@ app.get('/calculo', async (req, res) => {
     const inicioPrev = String(inicio).replace('2026', '2025')
     let fimPrev = String(fim).replace('2026', '2025')
 
-    if(fimPrev == '2025-02-28' && inicioPrev <= '2025-02-15') {
+    if (fimPrev == '2025-02-28' && inicioPrev <= '2025-02-15') {
         fimPrev = '2025-02-29'
     }
-    
+
     const queryPrev = (await database.table('recolhimento_diario')
-        .whereBetween('data', [inicioPrev, fimPrev])).map(r => ({...r,
+        .whereBetween('data', [inicioPrev, fimPrev])).map(r => ({
+            ...r,
             nominal: parseFloat(r.nominal),
             corrigido: parseFloat(r.corrigido)
         }))
-    
+
     const queryCurr = (await database.table('recolhimento_diario')
-        .whereBetween('data', [inicio, fim])).map(r => ({...r,
+        .whereBetween('data', [inicio, fim])).map(r => ({
+            ...r,
             nominal: parseFloat(r.nominal),
             corrigido: parseFloat(r.corrigido)
         }))
@@ -103,7 +107,7 @@ app.get('/calculo', async (req, res) => {
         premio: {
             porcentagem: 0,
             valor: 0
-        }, 
+        },
         distribuicao: {
             pontos: 495.15,
             auditor: 0,
@@ -123,17 +127,17 @@ app.get('/calculo', async (req, res) => {
 
     receitas.premio.porcentagem = 0.1
 
-    if(receitas.incremento.porcentagem >= 0.07) {
+    if (receitas.incremento.porcentagem >= 0.07) {
         receitas.premio.porcentagem = 0.15
     }
 
-    if(receitas.incremento.porcentagem >= 0.04 && receitas.incremento.porcentagem < 0.07) {
+    if (receitas.incremento.porcentagem >= 0.04 && receitas.incremento.porcentagem < 0.07) {
         receitas.premio.porcentagem = 0.125
     }
 
     const valorRefis = await connection.get('valor_refis')
 
-    receitas.refis =  parseFloat(valorRefis||'0')
+    receitas.refis = parseFloat(valorRefis || '0')
     receitas.premio.valor = (receitas.premio.porcentagem * receitas.incremento.valor * 0.8) + (receitas.refis * 0.05)
 
     receitas.distribuicao.auditor = receitas.premio.valor / receitas.distribuicao.pontos * 3
@@ -141,7 +145,7 @@ app.get('/calculo', async (req, res) => {
 
     res.send(receitas)
 
-    
+
 });
 
 app.get('/ipca', async (_, res) => {
@@ -161,3 +165,24 @@ app.post('/ipca', async (req, res) => {
     return update;
 });
 
+app.get<{ Params: { mes: string } }>('/servidores/:mes', async (req, res) => {
+
+    const { mes } = req.params
+
+    const url = `https://transparencia.fortaleza.ce.gov.br/index.php/servidores/consultar?mes=01&ano=2026&nome=&orgao=23101&funcao=&btnConsultar=Consultar`
+
+    const {data} = await axios.get(url)
+
+    await writeFile(`servidores.html`, data)
+
+
+    return data
+})
+
+
+app.get<{Params: { dia: string, subalinea: string }}>('/consulta/:dia/:subalinea', async (req, reply) => {
+
+    const data = await carregarDia(req.params.dia, req.params.subalinea)
+
+    return data
+})
